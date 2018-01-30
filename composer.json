@@ -24,6 +24,7 @@
     },
     "require": {
         "php": ">=7.0.0",
+        "cleaniquecoders/blueprint-macro": "^1.0",
         "illuminate/support": "^5.5"
     },
     "require-dev": {
