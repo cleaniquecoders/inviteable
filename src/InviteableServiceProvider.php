@@ -13,7 +13,10 @@ class InviteableServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-
+        /**
+         * Migrations
+         */
+        $this->loadMigrationsFrom(__DIR__ . '/database/migrations');
     }
 
     /**
