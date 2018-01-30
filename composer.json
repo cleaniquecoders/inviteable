@@ -1,7 +1,7 @@
 {
-    "name": "cleanique-coders/inviteable",
+    "name": "cleaniquecoders/inviteable",
     "description": "Built with Laravel Standalone Package Creator",
-    "keywords": ["package", "laravel"],
+    "keywords": ["package", "laravel", "invite", "auth"],
     "license": "MIT",
     "authors": [
         {
