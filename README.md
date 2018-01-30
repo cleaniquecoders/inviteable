@@ -19,13 +19,50 @@ $ composer require cleaniquecoders/inviteable
 CleaniqueCoders\Inviteable\InviteableServiceProvider::class,
 ```
 
-3. In the same `config/app.php` add the following to the aliases array:
+3. Run the migration file:
 
-```php
-'Inviteable' => CleaniqueCoders\Inviteable\InviteableFacade::class,
+```
+$ php artisan migrate
 ```
 
 ## Usage
+
+Inviteable provide a trait `\CleaniqueCoders\Inviteable\Traits\HasInviteable`. 
+
+Following are the sample usage.
+
+### Setup
+
+```php
+use CleaniqueCoders\Inviteable\Traits\HasInviteable;
+
+class User extends Authenticatable 
+{
+	use HasInviteable;
+}
+```
+
+### Creating Invitation
+
+```
+$invitation = User::create([
+    'email'    => 'test@test.com',
+    'name'     => 'Test Name',
+    'password' => bcrypt('secret'),
+])
+    ->inviteables()
+    ->create([
+        'name'       => 'Invitation',
+        'token'      => str_random(64),
+        'invited_by' => 1,
+        'is_expired' => false,
+        'expired_at' => \Carbon\Carbon::now()->addHours(24),
+    ]);
+```
+
+Once you have create the invitation, you may use the invitation with events and notifications. 
+
+Will add dispatching event on invitation created, so you can extend the use of the invitation to something else like notification.
 
 ## Test
 
