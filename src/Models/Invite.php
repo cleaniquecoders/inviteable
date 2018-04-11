@@ -31,4 +31,12 @@ class Invite extends Model
     protected $dates = [
         'expired_at', 'deleted_at', 'created_at', 'updated_at',
     ];
+
+     /**
+     * Get all of the owning invitations models.
+     */
+    public function inviteables()
+    {
+        return $this->morphTo();
+    }
 }
