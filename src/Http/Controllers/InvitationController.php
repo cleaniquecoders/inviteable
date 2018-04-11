@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 
 class InvitationController extends Controller
 {
-    public function __invoke(Request $request)
+    public function __invoke(Request $request, $token)
     {
     	try {
 	        $invitation = Invite::where('token', $token)->firstOrFail();
