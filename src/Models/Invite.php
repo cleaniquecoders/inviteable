@@ -3,6 +3,7 @@
 namespace CleaniqueCoders\Inviteable\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use CleaniqueCoders\Inviteable\Events\InvitationCreated;
 
 class Invite extends Model
 {
@@ -12,6 +13,15 @@ class Invite extends Model
      * @var array
      */
     protected $guarded = ['id'];
+
+    /**
+     * The event map for the model.
+     *
+     * @var array
+     */
+    protected $dispatchesEvents = [
+        'created' => InvitationCreated::class,
+    ];
 
     /**
      * The attributes that should be mutated to dates.

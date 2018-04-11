@@ -2,7 +2,9 @@
 
 namespace CleaniqueCoders\Inviteable\Tests;
 
+use CleaniqueCoders\Inviteable\Events\InvitationCreated;
 use CleaniqueCoders\Inviteable\Tests\Stubs\User;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 
@@ -23,6 +25,8 @@ class InviteTest extends TestCase
     /** @test */
     public function it_can_generate_invitation()
     {
+        Event::fake();
+
         User::create([
             'email'    => 'admin@testbench.com',
             'name'     => 'Admin Test Bench',
@@ -42,7 +46,11 @@ class InviteTest extends TestCase
                 'is_expired' => false,
                 'expired_at' => \Carbon\Carbon::now()->addHours(24),
             ]);
-
+        
+        Event::assertDispatched(InvitationCreated::class, function ($event) use ($invitation) {
+            return $event->invitation->id === $invitation->id;
+        });
+        
         $this->assertEquals('CleaniqueCoders\Inviteable\Tests\Stubs\User', $invitation->inviteable_type);
         $this->assertEquals(2, $invitation->inviteable_id);
         $this->assertEquals(1, $invitation->invited_by);
