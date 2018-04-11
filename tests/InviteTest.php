@@ -38,7 +38,7 @@ class InviteTest extends TestCase
             'name'     => 'Test Bench',
             'password' => bcrypt('secret'),
         ])
-            ->inviteables()
+            ->invitations()
             ->create([
                 'name'       => 'Invitation',
                 'token'      => Str::random(64),

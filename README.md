@@ -50,7 +50,7 @@ $invitation = User::create([
     'name'     => 'Test Name',
     'password' => bcrypt('secret'),
 ])
-    ->inviteables()
+    ->invitations()
     ->create([
         'name'       => 'Invitation',
         'token'      => str_random(64),

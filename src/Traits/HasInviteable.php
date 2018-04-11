@@ -9,7 +9,7 @@ trait HasInviteable
      * 
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
-    public function inviteables()
+    public function invitations()
     {
         return $this->morphMany(\CleaniqueCoders\Inviteable\Models\Invite::class, 'inviteable');
     }
