@@ -2,8 +2,12 @@
 
 namespace CleaniqueCoders\Inviteable\Tests;
 
+use CleaniqueCoders\Inviteable\Events\InvitationAccepted;
+use CleaniqueCoders\Inviteable\Events\InvitationAlreadyAccepted;
 use CleaniqueCoders\Inviteable\Events\InvitationCreated;
+use CleaniqueCoders\Inviteable\Exceptions\InvalidInvitationToken;
 use CleaniqueCoders\Inviteable\Tests\Stubs\User;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
@@ -55,5 +59,31 @@ class InviteTest extends TestCase
         $this->assertEquals(2, $invitation->inviteable_id);
         $this->assertEquals(1, $invitation->invited_by);
         $this->assertEquals('Invitation', $invitation->name);
+
+        $response = $this->get('invitation/' . $invitation->token);
+        $response->assertStatus(200);
+        
+        // First time navigate to invitation/{token}
+        Event::assertDispatched(InvitationAccepted::class, function ($event) use ($invitation) {
+            return $event->invitation->id === $invitation->id;
+        });
+
+        // Second time navigate to invitation/{token}
+        $response = $this->get('invitation/' . $invitation->token);
+        $response->assertStatus(200);
+        Event::assertDispatched(InvitationAlreadyAccepted::class, function ($event) use ($invitation) {
+            return $event->invitation->id === $invitation->id;
+        });
+
+        /**
+         * Invalid Token
+         * 
+         * It should assert expect to throw an exception of invalid invitation token and status code
+         */
+        $this->expectException(InvalidInvitationToken::class);
+        $this->withoutExceptionHandling();
+        $response = $this->get('invitation/invalid-token');
+        $response->assertStatus(500);
+        $this->assertTrue($response->exception instanceof InvalidInvitationToken);
     }
 }
