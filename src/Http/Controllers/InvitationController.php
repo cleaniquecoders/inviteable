@@ -24,8 +24,12 @@ class InvitationController extends Controller
 		        ]);
 		        
 		        event(new InvitationAccepted($invitation));	
+		        
+		        return redirect()->route(config('inviteable.redirect.accepted_token'));
 	        } else {
 	        	event(new InvitationAlreadyAccepted($invitation));
+
+	        	return redirect()->route(config('inviteable.redirect.already_accepted_token'));
 	        }
 	    } catch (ModelNotFoundException $e) {
 	        throw new InvalidInvitationToken();
