@@ -61,7 +61,7 @@ class InviteTest extends TestCase
         $this->assertEquals('Invitation', $invitation->name);
 
         $response = $this->get('invitation/' . $invitation->token);
-        $response->assertStatus(200);
+        $response->assertStatus(302);
         
         // First time navigate to invitation/{token}
         Event::assertDispatched(InvitationAccepted::class, function ($event) use ($invitation) {
@@ -70,7 +70,7 @@ class InviteTest extends TestCase
 
         // Second time navigate to invitation/{token}
         $response = $this->get('invitation/' . $invitation->token);
-        $response->assertStatus(200);
+        $response->assertStatus(302);
         Event::assertDispatched(InvitationAlreadyAccepted::class, function ($event) use ($invitation) {
             return $event->invitation->id === $invitation->id;
         });
