@@ -14,6 +14,16 @@ class InviteableServiceProvider extends ServiceProvider
     public function boot()
     {
         /**
+         * Configuration
+         */
+        $this->publishes([
+            __DIR__ . '/config/inviteable.php' => config_path('inviteable.php'),
+        ]);
+        $this->mergeConfigFrom(
+            __DIR__ . '/config/inviteable.php', 'inviteable'
+        );
+
+        /**
          * Migrations
          */
         $this->loadMigrationsFrom(__DIR__ . '/database/migrations');
@@ -29,7 +39,7 @@ class InviteableServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__ . '/resources/views', 'inviteable');
         $this->publishes([
             __DIR__ . '/resources/views' => resource_path('views/vendor/inviteables'),
-        ], 'inviteable-views');
+        ], 'inviteable');
     }
 
     /**
