@@ -39,4 +39,49 @@ class Invite extends Model
     {
         return $this->morphTo();
     }
+
+    /**
+     * Get Active Invitation(s).
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param  string|null $token Invitation Token
+     * @return bool
+     */
+    public function scopeActiveInvitation($query, $token = null)
+    {
+        if(!is_null($token)) {
+            $query->where('token', $token);
+        }
+        return $query->where('is_expired', false);
+    }
+
+    /**
+     * Get Expired Invitation(s).
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param  string|null $token Invitation Token
+     * @return bool
+     */
+    public function scopeExpiredInvitation($query, $token = null)
+    {
+        if(!is_null($token)) {
+            $query->where('token', $token);
+        }
+        return $query->where('is_expired', true);
+    }
+
+    /**
+     * Get Accepted Invitation(s).
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param  string|null $token Invitation Token
+     * @return bool
+     */
+    public function scopeAcceptedInvitation($query, $token = null)
+    {
+        if(!is_null($token)) {
+            $query->where('token', $token);
+        }
+        return $query->where('is_accepted', true);
+    }
 }
