@@ -18,7 +18,7 @@ class InviteableServiceProvider extends ServiceProvider
          */
         $this->publishes([
             __DIR__ . '/config/inviteable.php' => config_path('inviteable.php'),
-        ]);
+        ], 'inviteable');
         $this->mergeConfigFrom(
             __DIR__ . '/config/inviteable.php', 'inviteable'
         );
@@ -38,7 +38,7 @@ class InviteableServiceProvider extends ServiceProvider
          */
         $this->loadViewsFrom(__DIR__ . '/resources/views', 'inviteable');
         $this->publishes([
-            __DIR__ . '/resources/views' => resource_path('views/vendor/inviteables'),
+            __DIR__ . '/resources/views' => resource_path('views/vendor/inviteable'),
         ], 'inviteable');
     }
 
