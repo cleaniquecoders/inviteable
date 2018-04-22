@@ -8,12 +8,10 @@ class InviteableServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap the application services.
-     *
-     * @return void
      */
     public function boot()
     {
-        /**
+        /*
          * Configuration
          */
         $this->publishes([
@@ -23,17 +21,17 @@ class InviteableServiceProvider extends ServiceProvider
             __DIR__ . '/config/inviteable.php', 'inviteable'
         );
 
-        /**
+        /*
          * Migrations
          */
         $this->loadMigrationsFrom(__DIR__ . '/database/migrations');
 
-        /**
+        /*
          * Routes
          */
         $this->loadRoutesFrom(__DIR__ . '/routes/web.php');
 
-        /**
+        /*
          * Views
          */
         $this->loadViewsFrom(__DIR__ . '/resources/views', 'inviteable');
@@ -44,11 +42,8 @@ class InviteableServiceProvider extends ServiceProvider
 
     /**
      * Register the application services.
-     *
-     * @return void
      */
     public function register()
     {
-        //
     }
 }
