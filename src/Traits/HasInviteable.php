@@ -6,7 +6,7 @@ trait HasInviteable
 {
     /**
      * Get all invitations.
-     * 
+     *
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
     public function invitations()

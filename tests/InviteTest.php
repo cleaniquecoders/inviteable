@@ -6,10 +6,8 @@ use CleaniqueCoders\Inviteable\Events\InvitationAccepted;
 use CleaniqueCoders\Inviteable\Events\InvitationAlreadyAccepted;
 use CleaniqueCoders\Inviteable\Events\InvitationCreated;
 use CleaniqueCoders\Inviteable\Exceptions\InvalidInvitationToken;
-use CleaniqueCoders\Inviteable\Listeners\Invitations\SendInvitationMail as SendInvitationMailListener;
 use CleaniqueCoders\Inviteable\Mail\SendInvitationMail;
 use CleaniqueCoders\Inviteable\Tests\Stubs\User;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Schema;
@@ -56,21 +54,21 @@ class InviteTest extends TestCase
                 'is_expired' => false,
                 'expired_at' => \Carbon\Carbon::now()->addHours(24),
             ]);
-        
+
         Event::assertDispatched(InvitationCreated::class, function ($event) use ($invitation) {
             return $event->invitation->id === $invitation->id;
         });
-        
+
         $this->assertEquals('CleaniqueCoders\Inviteable\Tests\Stubs\User', $invitation->inviteable_type);
         $this->assertEquals(2, $invitation->inviteable_id);
         $this->assertEquals(1, $invitation->invited_by);
         $this->assertEquals('Invitation', $invitation->name);
 
-        /**
+        /*
          * E-mail Invitation Test
          */
         Mail::to($user)->send(new SendInvitationMail($invitation->token));
-        
+
         Mail::assertSent(SendInvitationMail::class, function ($mail) use ($invitation) {
             return $mail->token === $invitation->token;
         });
@@ -81,8 +79,8 @@ class InviteTest extends TestCase
 
         $response = $this->get('invitation/' . $invitation->token);
         $response->assertStatus(302);
-        
-        /**
+
+        /*
          * First time navigate to invitation/{token}
          */
         Event::assertDispatched(InvitationAccepted::class, function ($event) use ($invitation) {
@@ -90,7 +88,7 @@ class InviteTest extends TestCase
         });
 
         /**
-         * Second time navigate to invitation/{token}
+         * Second time navigate to invitation/{token}.
          */
         $response = $this->get('invitation/' . $invitation->token);
         $response->assertStatus(302);
@@ -98,9 +96,9 @@ class InviteTest extends TestCase
             return $event->invitation->id === $invitation->id;
         });
 
-        /**
+        /*
          * Invalid Token
-         * 
+         *
          * It should assert expect to throw an exception of invalid invitation token and status code
          */
         $this->expectException(InvalidInvitationToken::class);
