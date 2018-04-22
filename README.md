@@ -64,6 +64,32 @@ Once you have create the invitation, you may use the invitation with events and 
 
 Will add dispatching event on invitation created, so you can extend the use of the invitation to something else like notification.
 
+More sample usage using `routes/console.php`:
+
+```php
+use App\User;
+
+Artisan::command('invite', function() {
+    // create a user that will invite other person
+    $invitor = factory(User::class)->create();
+    
+    // to invite who
+    $to_invite = factory(User::class)->create();
+    
+    // login using invitor
+    auth()->loginUsingId($invitor->id);
+
+    // invite user to a class
+    $to_invite->invitations()->create([
+        'name'       => 'Live Coding Class',
+        'token'      => str_random(64),
+        'invited_by' => auth()->user()->id,
+        'is_expired' => false,
+        'expired_at' => \Carbon\Carbon::now()->addHours(24),
+    ]);
+})->describe('Inivite the fastest way via cli.');
+```
+
 ## Test
 
 To run the test, type `vendor/bin/phpunit` in your terminal.
