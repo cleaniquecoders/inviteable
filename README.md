@@ -50,7 +50,7 @@ $invitation = User::create([
     'name'     => 'Test Name',
     'password' => bcrypt('secret'),
 ])
-    ->inviteables()
+    ->invitations()
     ->create([
         'name'       => 'Invitation',
         'token'      => str_random(64),
@@ -63,6 +63,90 @@ $invitation = User::create([
 Once you have create the invitation, you may use the invitation with events and notifications. 
 
 Will add dispatching event on invitation created, so you can extend the use of the invitation to something else like notification.
+
+More sample usage using `routes/console.php`:
+
+```php
+use App\User;
+
+Artisan::command('invite', function() {
+    // create a user that will invite other person
+    $invitor = factory(User::class)->create();
+    
+    // to invite who
+    $to_invite = factory(User::class)->create();
+    
+    // login using invitor
+    auth()->loginUsingId($invitor->id);
+
+    // invite user to a class
+    $to_invite->invitations()->create([
+        'name'       => 'Live Coding Class',
+        'token'      => str_random(64),
+        'invited_by' => auth()->user()->id,
+        'is_expired' => false,
+        'expired_at' => \Carbon\Carbon::now()->addHours(24),
+    ]);
+})->describe('Inivite the fastest way via cli.');
+```
+
+### Event and Listener
+
+1. On Invitation Created - `\CleaniqueCoders\Inviteable\Events\InvitationAccepted`
+2. On Invitation Accepted - `\CleaniqueCoders\Inviteable\Events\InvitationAlreadyAccepted`
+3. On Invitation Already Accepted - `\CleaniqueCoders\Inviteable\Events\InvitationCreated`
+
+Added Listener to send out e-mail invitation:
+
+1. `CleaniqueCoders\Inviteable\Listeners\Invitations` - You need to configure in your `app/Providers/EventServiceProvider` to have this in your app. 
+
+```php
+/**
+     * The event listener mappings for the application.
+     *
+     * @var array
+     */
+    protected $listen = [
+        '\CleaniqueCoders\Inviteable\Events\InvitationCreated' => [
+            '\CleaniqueCoders\Inviteable\Listeners\Invitations\SendInvitationEmail',
+        ],
+    ];
+```
+
+### Middleware
+
+Added Middleware to be use to check only active invite able to get through
+
+```php
+'inviteable' => \CleaniqueCoders\Inviteable\Http\Middleware\Inviteable::class,
+```
+
+### Configuration
+
+Added `config/inviteable.php` to handle redirection - using route name:
+
+```php
+<?php 
+
+return [
+    'redirect' => [
+        'accepted_token' => 'invitation.index',
+        'already_accepted_token' => 'invitation.index',
+        'middleware' => 'invitation.access_denied'
+    ],
+];
+```
+
+### Route
+
+Default route `php artisan route:list --name=invitation` consist of 
+
+1. Activation invitation - on success, you will redirect to `inviteable.redirect.accepted_token` route. You may overwrite this. In this route also handle already accepted invitation. Do specify `inviteable.redirect.already_accepted_token` route name to redirect to other page.
+2. Access denied route - You can change the redirect by specify route name in `config.redirect.middleware`
+
+### Views
+
+Run `php artisan vendor:publish --tag=inviteable` to publish configuration and views for Inviteable.
 
 ## Test
 

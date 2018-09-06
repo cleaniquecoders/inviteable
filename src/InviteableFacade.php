@@ -2,13 +2,6 @@
 
 namespace CleaniqueCoders\Inviteable;
 
-/*
- * This file is part of inviteable
- *
- * @license MIT
- * @package inviteable
- */
-
 use Illuminate\Support\Facades\Facade;
 
 class InviteableFacade extends Facade
