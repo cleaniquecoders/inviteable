@@ -3,12 +3,12 @@
 namespace CleaniqueCoders\Inviteable\Traits;
 
 /**
- * HasInviteable Trait
+ * HasInviteable Trait.
  */
 trait HasInviteable
 {
     /**
-     * Get all invitations
+     * Get all invitations.
      */
     public function inviteables()
     {

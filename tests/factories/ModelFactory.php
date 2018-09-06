@@ -12,8 +12,9 @@
  */
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-$factory->define(\CleaniqueCoders\Inviteable\Tests\Stubs\User::class, function (Faker\Generator $faker) {
+$factory->define(\CleaniqueCoders\Inviteable\Tests\Stubs\User::class, function(Faker\Generator $faker) {
     static $password;
+
     return [
         'name'           => $faker->name,
         'email'          => $faker->unique()->safeEmail,

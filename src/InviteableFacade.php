@@ -2,7 +2,7 @@
 
 namespace CleaniqueCoders\Inviteable;
 
-/**
+/*
  * This file is part of inviteable
  *
  * @license MIT
