@@ -1,0 +1,38 @@
+laravel: '@testbench'
+
+env:
+  - APP_KEY=base64:LfZY0sBYkw3P5XX/9UE3f4Akv0L2xpJIVEdGPVNDx4k=
+  - APP_DEBUG=true
+  - DB_CONNECTION=sqlite
+  - DB_DATABASE=workbench/database/database.sqlite
+  - SESSION_DRIVER=file
+
+providers:
+  - Workbench\App\Providers\WorkbenchServiceProvider
+  - CleaniqueCoders\Inviteable\InviteableServiceProvider
+
+migrations:
+  - workbench/database/migrations
+
+seeders:
+  - Workbench\App\Database\Seeders\DatabaseSeeder
+
+workbench:
+  start: '/invitations'
+  install: true
+  health: false
+  discovers:
+    web: true
+    api: true
+    commands: true
+    components: true
+    factories: true
+    views: true
+  build:
+    - asset-publish
+    - create-sqlite-db
+    - db-wipe
+    - migrate-fresh
+  assets:
+    - laravel-assets
+  sync: []

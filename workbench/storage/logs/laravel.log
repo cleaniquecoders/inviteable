@@ -1,0 +1,148 @@
+[2026-03-01 10:08:37] workbench.ERROR: The /Users/nasrulhazim/Packages/2026/inviteable/workbench/bootstrap/cache directory must be present and writable. {"exception":"[object] (Exception(code: 0): The /Users/nasrulhazim/Packages/2026/inviteable/workbench/bootstrap/cache directory must be present and writable. at /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Foundation/PackageManifest.php:179)
+[stacktrace]
+#0 /Users/nasrulhazim/Packages/2026/inviteable/vendor/orchestra/testbench-core/src/Foundation/PackageManifest.php(158): Illuminate\\Foundation\\PackageManifest->write(Array)
+#1 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Foundation/PackageManifest.php(132): Orchestra\\Testbench\\Foundation\\PackageManifest->write(Array)
+#2 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Foundation/PackageManifest.php(108): Illuminate\\Foundation\\PackageManifest->build()
+#3 /Users/nasrulhazim/Packages/2026/inviteable/vendor/orchestra/testbench-core/src/Foundation/PackageManifest.php(103): Illuminate\\Foundation\\PackageManifest->getManifest()
+#4 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Foundation/PackageManifest.php(90): Orchestra\\Testbench\\Foundation\\PackageManifest->getManifest()
+#5 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Foundation/PackageManifest.php(79): Illuminate\\Foundation\\PackageManifest->config('aliases')
+#6 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/RegisterFacades.php(26): Illuminate\\Foundation\\PackageManifest->aliases()
+#7 /Users/nasrulhazim/Packages/2026/inviteable/vendor/orchestra/testbench-core/src/Concerns/CreatesApplication.php(533): Illuminate\\Foundation\\Bootstrap\\RegisterFacades->bootstrap(Object(Illuminate\\Foundation\\Application))
+#8 /Users/nasrulhazim/Packages/2026/inviteable/vendor/orchestra/testbench-core/src/Concerns/CreatesApplication.php(288): Orchestra\\Testbench\\Foundation\\Application->resolveApplicationBootstrappers(Object(Illuminate\\Foundation\\Application))
+#9 /Users/nasrulhazim/Packages/2026/inviteable/vendor/orchestra/testbench-core/src/Foundation/Application.php(196): Orchestra\\Testbench\\Foundation\\Application->createApplication()
+#10 /Users/nasrulhazim/Packages/2026/inviteable/vendor/orchestra/testbench-core/laravel/bootstrap/app.php(26): Orchestra\\Testbench\\Foundation\\Application::create('/Users/nasrulha...', Object(Closure), Array)
+#11 /Users/nasrulhazim/Packages/2026/inviteable/vendor/orchestra/testbench-core/laravel/bootstrap/app.php(36): {closure:/Users/nasrulhazim/Packages/2026/inviteable/vendor/orchestra/testbench-core/laravel/bootstrap/app.php:16}('/Users/nasrulha...')
+#12 /Users/nasrulhazim/Packages/2026/inviteable/vendor/orchestra/testbench-core/laravel/public/index.php(18): require_once('/Users/nasrulha...')
+#13 /Users/nasrulhazim/Packages/2026/inviteable/vendor/orchestra/testbench-core/laravel/server.php(23): require_once('/Users/nasrulha...')
+#14 {main}
+"} 
+[2026-03-01 10:08:37] workbench.ERROR: Uncaught ReflectionException: Class "request" does not exist in /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Container/Container.php:1122
+Stack trace:
+#0 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Container/Container.php(1122): ReflectionClass->__construct('request')
+#1 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Container/Container.php(933): Illuminate\Container\Container->build('request')
+#2 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1078): Illuminate\Container\Container->resolve('request', Array, true)
+#3 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Container/Container.php(864): Illuminate\Foundation\Application->resolve('request', Array)
+#4 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1058): Illuminate\Container\Container->make('request', Array)
+#5 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Container/Container.php(1805): Illuminate\Foundation\Application->make('request')
+#6 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(221): Illuminate\Container\Container->offsetGet('request')
+#7 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(198): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Exception))
+#8 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(258): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Exception))
+#9 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->{closure:Illuminate\Foundation\Bootstrap\HandleExceptions::forwardsTo():257}(Object(Exception))
+#10 {main}
+
+Next Illuminate\Contracts\Container\BindingResolutionException: Target class [request] does not exist. in /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Container/Container.php:1124
+Stack trace:
+#0 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Container/Container.php(933): Illuminate\Container\Container->build('request')
+#1 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1078): Illuminate\Container\Container->resolve('request', Array, true)
+#2 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Container/Container.php(864): Illuminate\Foundation\Application->resolve('request', Array)
+#3 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1058): Illuminate\Container\Container->make('request', Array)
+#4 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Container/Container.php(1805): Illuminate\Foundation\Application->make('request')
+#5 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(221): Illuminate\Container\Container->offsetGet('request')
+#6 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(198): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Exception))
+#7 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(258): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Exception))
+#8 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->{closure:Illuminate\Foundation\Bootstrap\HandleExceptions::forwardsTo():257}(Object(Exception))
+#9 {main}
+  thrown {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Uncaught ReflectionException: Class \"request\" does not exist in /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Container/Container.php:1122
+Stack trace:
+#0 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Container/Container.php(1122): ReflectionClass->__construct('request')
+#1 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Container/Container.php(933): Illuminate\\Container\\Container->build('request')
+#2 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1078): Illuminate\\Container\\Container->resolve('request', Array, true)
+#3 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Container/Container.php(864): Illuminate\\Foundation\\Application->resolve('request', Array)
+#4 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1058): Illuminate\\Container\\Container->make('request', Array)
+#5 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Container/Container.php(1805): Illuminate\\Foundation\\Application->make('request')
+#6 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(221): Illuminate\\Container\\Container->offsetGet('request')
+#7 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(198): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->renderHttpResponse(Object(Exception))
+#8 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(258): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleException(Object(Exception))
+#9 [internal function]: Illuminate\\Foundation\\Bootstrap\\HandleExceptions->{closure:Illuminate\\Foundation\\Bootstrap\\HandleExceptions::forwardsTo():257}(Object(Exception))
+#10 {main}
+
+Next Illuminate\\Contracts\\Container\\BindingResolutionException: Target class [request] does not exist. in /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Container/Container.php:1124
+Stack trace:
+#0 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Container/Container.php(933): Illuminate\\Container\\Container->build('request')
+#1 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1078): Illuminate\\Container\\Container->resolve('request', Array, true)
+#2 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Container/Container.php(864): Illuminate\\Foundation\\Application->resolve('request', Array)
+#3 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1058): Illuminate\\Container\\Container->make('request', Array)
+#4 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Container/Container.php(1805): Illuminate\\Foundation\\Application->make('request')
+#5 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(221): Illuminate\\Container\\Container->offsetGet('request')
+#6 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(198): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->renderHttpResponse(Object(Exception))
+#7 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(258): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleException(Object(Exception))
+#8 [internal function]: Illuminate\\Foundation\\Bootstrap\\HandleExceptions->{closure:Illuminate\\Foundation\\Bootstrap\\HandleExceptions::forwardsTo():257}(Object(Exception))
+#9 {main}
+  thrown at /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Container/Container.php:1124)
+[stacktrace]
+#0 {main}
+"} 
+[2026-03-01 10:08:38] workbench.ERROR: The /Users/nasrulhazim/Packages/2026/inviteable/workbench/bootstrap/cache directory must be present and writable. {"exception":"[object] (Exception(code: 0): The /Users/nasrulhazim/Packages/2026/inviteable/workbench/bootstrap/cache directory must be present and writable. at /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Foundation/PackageManifest.php:179)
+[stacktrace]
+#0 /Users/nasrulhazim/Packages/2026/inviteable/vendor/orchestra/testbench-core/src/Foundation/PackageManifest.php(158): Illuminate\\Foundation\\PackageManifest->write(Array)
+#1 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Foundation/PackageManifest.php(132): Orchestra\\Testbench\\Foundation\\PackageManifest->write(Array)
+#2 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Foundation/PackageManifest.php(108): Illuminate\\Foundation\\PackageManifest->build()
+#3 /Users/nasrulhazim/Packages/2026/inviteable/vendor/orchestra/testbench-core/src/Foundation/PackageManifest.php(103): Illuminate\\Foundation\\PackageManifest->getManifest()
+#4 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Foundation/PackageManifest.php(90): Orchestra\\Testbench\\Foundation\\PackageManifest->getManifest()
+#5 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Foundation/PackageManifest.php(79): Illuminate\\Foundation\\PackageManifest->config('aliases')
+#6 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/RegisterFacades.php(26): Illuminate\\Foundation\\PackageManifest->aliases()
+#7 /Users/nasrulhazim/Packages/2026/inviteable/vendor/orchestra/testbench-core/src/Concerns/CreatesApplication.php(533): Illuminate\\Foundation\\Bootstrap\\RegisterFacades->bootstrap(Object(Illuminate\\Foundation\\Application))
+#8 /Users/nasrulhazim/Packages/2026/inviteable/vendor/orchestra/testbench-core/src/Concerns/CreatesApplication.php(288): Orchestra\\Testbench\\Foundation\\Application->resolveApplicationBootstrappers(Object(Illuminate\\Foundation\\Application))
+#9 /Users/nasrulhazim/Packages/2026/inviteable/vendor/orchestra/testbench-core/src/Foundation/Application.php(196): Orchestra\\Testbench\\Foundation\\Application->createApplication()
+#10 /Users/nasrulhazim/Packages/2026/inviteable/vendor/orchestra/testbench-core/laravel/bootstrap/app.php(26): Orchestra\\Testbench\\Foundation\\Application::create('/Users/nasrulha...', Object(Closure), Array)
+#11 /Users/nasrulhazim/Packages/2026/inviteable/vendor/orchestra/testbench-core/laravel/bootstrap/app.php(36): {closure:/Users/nasrulhazim/Packages/2026/inviteable/vendor/orchestra/testbench-core/laravel/bootstrap/app.php:16}('/Users/nasrulha...')
+#12 /Users/nasrulhazim/Packages/2026/inviteable/vendor/orchestra/testbench-core/laravel/public/index.php(18): require_once('/Users/nasrulha...')
+#13 /Users/nasrulhazim/Packages/2026/inviteable/vendor/orchestra/testbench-core/laravel/server.php(23): require_once('/Users/nasrulha...')
+#14 {main}
+"} 
+[2026-03-01 10:08:38] workbench.ERROR: Uncaught ReflectionException: Class "request" does not exist in /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Container/Container.php:1122
+Stack trace:
+#0 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Container/Container.php(1122): ReflectionClass->__construct('request')
+#1 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Container/Container.php(933): Illuminate\Container\Container->build('request')
+#2 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1078): Illuminate\Container\Container->resolve('request', Array, true)
+#3 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Container/Container.php(864): Illuminate\Foundation\Application->resolve('request', Array)
+#4 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1058): Illuminate\Container\Container->make('request', Array)
+#5 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Container/Container.php(1805): Illuminate\Foundation\Application->make('request')
+#6 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(221): Illuminate\Container\Container->offsetGet('request')
+#7 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(198): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Exception))
+#8 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(258): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Exception))
+#9 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->{closure:Illuminate\Foundation\Bootstrap\HandleExceptions::forwardsTo():257}(Object(Exception))
+#10 {main}
+
+Next Illuminate\Contracts\Container\BindingResolutionException: Target class [request] does not exist. in /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Container/Container.php:1124
+Stack trace:
+#0 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Container/Container.php(933): Illuminate\Container\Container->build('request')
+#1 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1078): Illuminate\Container\Container->resolve('request', Array, true)
+#2 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Container/Container.php(864): Illuminate\Foundation\Application->resolve('request', Array)
+#3 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1058): Illuminate\Container\Container->make('request', Array)
+#4 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Container/Container.php(1805): Illuminate\Foundation\Application->make('request')
+#5 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(221): Illuminate\Container\Container->offsetGet('request')
+#6 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(198): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Exception))
+#7 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(258): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Exception))
+#8 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->{closure:Illuminate\Foundation\Bootstrap\HandleExceptions::forwardsTo():257}(Object(Exception))
+#9 {main}
+  thrown {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Uncaught ReflectionException: Class \"request\" does not exist in /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Container/Container.php:1122
+Stack trace:
+#0 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Container/Container.php(1122): ReflectionClass->__construct('request')
+#1 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Container/Container.php(933): Illuminate\\Container\\Container->build('request')
+#2 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1078): Illuminate\\Container\\Container->resolve('request', Array, true)
+#3 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Container/Container.php(864): Illuminate\\Foundation\\Application->resolve('request', Array)
+#4 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1058): Illuminate\\Container\\Container->make('request', Array)
+#5 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Container/Container.php(1805): Illuminate\\Foundation\\Application->make('request')
+#6 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(221): Illuminate\\Container\\Container->offsetGet('request')
+#7 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(198): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->renderHttpResponse(Object(Exception))
+#8 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(258): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleException(Object(Exception))
+#9 [internal function]: Illuminate\\Foundation\\Bootstrap\\HandleExceptions->{closure:Illuminate\\Foundation\\Bootstrap\\HandleExceptions::forwardsTo():257}(Object(Exception))
+#10 {main}
+
+Next Illuminate\\Contracts\\Container\\BindingResolutionException: Target class [request] does not exist. in /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Container/Container.php:1124
+Stack trace:
+#0 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Container/Container.php(933): Illuminate\\Container\\Container->build('request')
+#1 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1078): Illuminate\\Container\\Container->resolve('request', Array, true)
+#2 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Container/Container.php(864): Illuminate\\Foundation\\Application->resolve('request', Array)
+#3 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1058): Illuminate\\Container\\Container->make('request', Array)
+#4 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Container/Container.php(1805): Illuminate\\Foundation\\Application->make('request')
+#5 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(221): Illuminate\\Container\\Container->offsetGet('request')
+#6 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(198): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->renderHttpResponse(Object(Exception))
+#7 /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(258): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleException(Object(Exception))
+#8 [internal function]: Illuminate\\Foundation\\Bootstrap\\HandleExceptions->{closure:Illuminate\\Foundation\\Bootstrap\\HandleExceptions::forwardsTo():257}(Object(Exception))
+#9 {main}
+  thrown at /Users/nasrulhazim/Packages/2026/inviteable/vendor/laravel/framework/src/Illuminate/Container/Container.php:1124)
+[stacktrace]
+#0 {main}
+"} 

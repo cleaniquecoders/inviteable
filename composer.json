@@ -20,7 +20,10 @@
     "autoload-dev": {
         "psr-4": {
             "CleaniqueCoders\\Inviteable\\Database\\Factories\\": "database/factories/",
-            "CleaniqueCoders\\Inviteable\\Tests\\": "tests/"
+            "CleaniqueCoders\\Inviteable\\Tests\\": "tests/",
+            "Workbench\\App\\": "workbench/app/",
+            "Workbench\\App\\Database\\Seeders\\": "workbench/database/seeders/",
+            "Workbench\\App\\Providers\\": "workbench/app/Providers/"
         }
     },
     "require": {
@@ -42,7 +45,16 @@
     "scripts": {
         "test": "vendor/bin/pest",
         "analyse": "vendor/bin/phpstan analyse",
-        "format": "vendor/bin/pint"
+        "format": "vendor/bin/pint",
+        "dev:prepare": [
+            "@php -r \"file_put_contents('vendor/orchestra/testbench-core/laravel/.env', \\\"APP_KEY=base64:\\\".base64_encode(random_bytes(32)).\\\"\\nAPP_DEBUG=true\\nDB_CONNECTION=sqlite\\nDB_DATABASE=workbench/database/database.sqlite\\nSESSION_DRIVER=file\\n\\\");\"",
+            "@php -r \"@unlink('workbench/database/database.sqlite'); touch('workbench/database/database.sqlite');\"",
+            "@php vendor/bin/testbench migrate:fresh --seeder=\"Workbench\\\\App\\\\Database\\\\Seeders\\\\DatabaseSeeder\""
+        ],
+        "dev": [
+            "@dev:prepare",
+            "bash bin/serve.sh"
+        ]
     },
     "config": {
         "sort-packages": true,

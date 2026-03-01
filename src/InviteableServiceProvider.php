@@ -45,8 +45,10 @@ class InviteableServiceProvider extends PackageServiceProvider
         }
 
         if ($this->shouldRegisterUi()) {
-            $this->registerLivewireComponents();
-            $this->registerLivewireRoutes();
+            $this->app->booted(function (): void {
+                $this->registerLivewireComponents();
+                $this->registerLivewireRoutes();
+            });
         }
     }
 
@@ -85,15 +87,11 @@ class InviteableServiceProvider extends PackageServiceProvider
 
     private function registerLivewireComponents(): void
     {
-        if (! class_exists(Livewire::class)) {
+        if (! class_exists(Livewire::class) || ! $this->app->bound('livewire')) {
             return;
         }
 
-        Livewire::component('inviteable-dashboard', Http\Livewire\InvitationDashboard::class);
-        Livewire::component('inviteable-create', Http\Livewire\CreateInvitation::class);
-        Livewire::component('inviteable-detail', Http\Livewire\InvitationDetail::class);
-        Livewire::component('inviteable-accept-decline', Http\Livewire\AcceptDeclineInvitation::class);
-        Livewire::component('inviteable-settings', Http\Livewire\InvitationSettings::class);
+        Livewire::addNamespace('inviteable', classNamespace: 'CleaniqueCoders\\Inviteable\\Http\\Livewire');
     }
 
     private function registerLivewireRoutes(): void

@@ -5,3 +5,4 @@
 .phpunit.result.cache
 composer.lock
 todo.md
+workbench/database/database.sqlite
