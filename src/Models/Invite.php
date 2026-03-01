@@ -19,6 +19,9 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @property int|null $invited_by
  * @property int $inviteable_id
  * @property string $inviteable_type
+ * @property int|null $accepted_by
+ * @property string|null $accepted_ip
+ * @property array<string, mixed>|null $metadata
  * @property \Illuminate\Support\Carbon|null $accepted_at
  * @property \Illuminate\Support\Carbon|null $expired_at
  * @property \Illuminate\Support\Carbon|null $created_at
@@ -28,7 +31,22 @@ class Invite extends Model
 {
     use HasFactory;
 
-    protected $guarded = [];
+    /**
+     * Holds the plaintext token before hashing (not persisted).
+     */
+    public ?string $plainToken = null;
+
+    protected $fillable = [
+        'name',
+        'token',
+        'status',
+        'invited_by',
+        'accepted_by',
+        'accepted_ip',
+        'metadata',
+        'accepted_at',
+        'expired_at',
+    ];
 
     protected $dispatchesEvents = [
         'created' => InvitationCreated::class,
@@ -38,6 +56,7 @@ class Invite extends Model
     {
         return [
             'status' => InvitationStatus::class,
+            'metadata' => 'array',
             'accepted_at' => 'datetime',
             'expired_at' => 'datetime',
         ];
@@ -66,6 +85,16 @@ class Invite extends Model
     public function scopeRevoked(Builder $query): Builder
     {
         return $query->where('status', InvitationStatus::Revoked);
+    }
+
+    public function scopeDeclined(Builder $query): Builder
+    {
+        return $query->where('status', InvitationStatus::Declined);
+    }
+
+    public function scopeCancelled(Builder $query): Builder
+    {
+        return $query->where('status', InvitationStatus::Cancelled);
     }
 
     public function scopeForToken(Builder $query, string $token): Builder
@@ -104,6 +133,16 @@ class Invite extends Model
     public function isRevoked(): bool
     {
         return $this->status === InvitationStatus::Revoked;
+    }
+
+    public function isDeclined(): bool
+    {
+        return $this->status === InvitationStatus::Declined;
+    }
+
+    public function isCancelled(): bool
+    {
+        return $this->status === InvitationStatus::Cancelled;
     }
 
     protected static function newFactory(): \CleaniqueCoders\Inviteable\Database\Factories\InviteFactory

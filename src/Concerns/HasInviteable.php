@@ -24,4 +24,14 @@ trait HasInviteable
     {
         return $this->invitations()->where('status', InvitationStatus::Accepted);
     }
+
+    public function declinedInvitations(): MorphMany
+    {
+        return $this->invitations()->where('status', InvitationStatus::Declined);
+    }
+
+    public function revokedInvitations(): MorphMany
+    {
+        return $this->invitations()->where('status', InvitationStatus::Revoked);
+    }
 }

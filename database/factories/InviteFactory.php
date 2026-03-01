@@ -15,11 +15,14 @@ class InviteFactory extends Factory
 
     public function definition(): array
     {
+        $token = Str::random(64);
+
         return [
             'name' => fake()->sentence(3),
-            'token' => Str::random(64),
+            'token' => hash('sha256', $token),
             'status' => InvitationStatus::Pending,
             'invited_by' => null,
+            'metadata' => null,
             'expired_at' => now()->addHours((int) config('inviteable.expiry.duration', 48)),
         ];
     }
@@ -44,6 +47,30 @@ class InviteFactory extends Factory
     {
         return $this->state(fn () => [
             'status' => InvitationStatus::Revoked,
+        ]);
+    }
+
+    public function declined(): static
+    {
+        return $this->state(fn () => [
+            'status' => InvitationStatus::Declined,
+        ]);
+    }
+
+    public function cancelled(): static
+    {
+        return $this->state(fn () => [
+            'status' => InvitationStatus::Cancelled,
+        ]);
+    }
+
+    /**
+     * Create with a known plaintext token (for testing lookups).
+     */
+    public function withPlainToken(string $plainToken): static
+    {
+        return $this->state(fn () => [
+            'token' => hash('sha256', $plainToken),
         ]);
     }
 }

@@ -7,6 +7,7 @@ namespace CleaniqueCoders\Inviteable\Tests;
 use CleaniqueCoders\Inviteable\InviteableServiceProvider;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Livewire\LivewireServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 
 class TestCase extends Orchestra
@@ -21,6 +22,7 @@ class TestCase extends Orchestra
     protected function getPackageProviders($app): array
     {
         return [
+            LivewireServiceProvider::class,
             InviteableServiceProvider::class,
         ];
     }

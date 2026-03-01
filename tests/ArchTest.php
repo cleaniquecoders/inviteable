@@ -21,3 +21,15 @@ arch('concerns are traits')
 arch('exceptions extend Exception')
     ->expect('CleaniqueCoders\Inviteable\Exceptions')
     ->toExtend('Exception');
+
+arch('livewire components extend Component')
+    ->expect('CleaniqueCoders\Inviteable\Http\Livewire')
+    ->toExtend('Livewire\Component');
+
+arch('events use Dispatchable trait')
+    ->expect('CleaniqueCoders\Inviteable\Events')
+    ->toUseTrait('Illuminate\Foundation\Events\Dispatchable');
+
+arch('controllers extend Controller')
+    ->expect('CleaniqueCoders\Inviteable\Http\Controllers')
+    ->toExtend('Illuminate\Routing\Controller');

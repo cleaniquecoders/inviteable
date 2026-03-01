@@ -6,7 +6,6 @@ use CleaniqueCoders\Inviteable\Enums\InvitationStatus;
 use CleaniqueCoders\Inviteable\Models\Invite;
 use CleaniqueCoders\Inviteable\Tests\Stubs\User;
 use Illuminate\Support\Facades\Event;
-use Illuminate\Support\Str;
 
 beforeEach(function () {
     Event::fake();
@@ -21,7 +20,7 @@ beforeEach(function () {
 it('has invitations relationship', function () {
     $this->user->invitations()->create([
         'name' => 'Test',
-        'token' => Str::random(64),
+        'token' => hash('sha256', 'relationship-test'),
         'status' => InvitationStatus::Pending,
     ]);
 
@@ -32,13 +31,13 @@ it('has invitations relationship', function () {
 it('has pending invitations relationship', function () {
     $this->user->invitations()->create([
         'name' => 'Pending',
-        'token' => Str::random(64),
+        'token' => hash('sha256', 'pending-rel'),
         'status' => InvitationStatus::Pending,
     ]);
 
     $this->user->invitations()->create([
         'name' => 'Accepted',
-        'token' => Str::random(64),
+        'token' => hash('sha256', 'accepted-rel'),
         'status' => InvitationStatus::Accepted,
         'accepted_at' => now(),
     ]);
@@ -50,13 +49,13 @@ it('has pending invitations relationship', function () {
 it('has accepted invitations relationship', function () {
     $this->user->invitations()->create([
         'name' => 'Pending',
-        'token' => Str::random(64),
+        'token' => hash('sha256', 'pending-acc'),
         'status' => InvitationStatus::Pending,
     ]);
 
     $this->user->invitations()->create([
         'name' => 'Accepted',
-        'token' => Str::random(64),
+        'token' => hash('sha256', 'accepted-acc'),
         'status' => InvitationStatus::Accepted,
         'accepted_at' => now(),
     ]);
@@ -65,10 +64,30 @@ it('has accepted invitations relationship', function () {
     expect($this->user->acceptedInvitations->first()->name)->toBe('Accepted');
 });
 
+it('has declined invitations relationship', function () {
+    $this->user->invitations()->create([
+        'name' => 'Declined',
+        'token' => hash('sha256', 'declined-rel'),
+        'status' => InvitationStatus::Declined,
+    ]);
+
+    expect($this->user->declinedInvitations)->toHaveCount(1);
+});
+
+it('has revoked invitations relationship', function () {
+    $this->user->invitations()->create([
+        'name' => 'Revoked',
+        'token' => hash('sha256', 'revoked-rel'),
+        'status' => InvitationStatus::Revoked,
+    ]);
+
+    expect($this->user->revokedInvitations)->toHaveCount(1);
+});
+
 it('resolves morph relationship back to user', function () {
     $invite = $this->user->invitations()->create([
         'name' => 'Morph Test',
-        'token' => Str::random(64),
+        'token' => hash('sha256', 'morph-test'),
         'status' => InvitationStatus::Pending,
     ]);
 

@@ -15,8 +15,12 @@ class ValidateInvitationToken
     {
         $token = $request->route('token');
 
-        if ($token && Invite::query()->forToken($token)->active()->exists()) {
-            return $next($request);
+        if ($token) {
+            $hashedToken = hash('sha256', (string) $token);
+
+            if (Invite::query()->forToken($hashedToken)->active()->exists()) {
+                return $next($request);
+            }
         }
 
         return redirect()->route(config('inviteable.redirect.middleware'));

@@ -30,7 +30,7 @@ class InvitationMail extends Mailable
         return new Content(
             markdown: 'inviteable::mails.invitation',
             with: [
-                'url' => route('invitation', $this->token),
+                'url' => route('invitation.show', $this->token),
             ],
         );
     }
