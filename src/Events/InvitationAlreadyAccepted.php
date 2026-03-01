@@ -1,40 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CleaniqueCoders\Inviteable\Events;
 
 use CleaniqueCoders\Inviteable\Models\Invite;
-use Illuminate\Broadcasting\Channel;
-use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
 class InvitationAlreadyAccepted
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels;
+    use Dispatchable, SerializesModels;
 
-    /**
-     * Invite object.
-     *
-     * @var CleaniqueCoders\Inviteable\Models\Invite
-     */
-    public $invitation;
-
-    /**
-     * Create a new event instance.
-     */
-    public function __construct(Invite $invitation)
-    {
-        $this->invitation = $invitation;
-    }
-
-    /**
-     * Get the channels the event should broadcast on.
-     *
-     * @return \Illuminate\Broadcasting\Channel|array
-     */
-    public function broadcastOn()
-    {
-        return new PrivateChannel('channel-name');
-    }
+    public function __construct(
+        public readonly Invite $invitation,
+    ) {}
 }

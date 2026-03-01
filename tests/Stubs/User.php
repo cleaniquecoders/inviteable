@@ -1,13 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CleaniqueCoders\Inviteable\Tests\Stubs;
 
-use CleaniqueCoders\Inviteable\Traits\HasInviteable;
-use Illuminate\Foundation\Auth\User as Eloquent;
+use CleaniqueCoders\Inviteable\Concerns\HasInviteable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Eloquent
+class User extends Authenticatable
 {
     use HasInviteable;
 
-    protected $guarded = ['id'];
+    protected $guarded = [];
 }

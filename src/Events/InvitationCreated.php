@@ -1,28 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CleaniqueCoders\Inviteable\Events;
 
 use CleaniqueCoders\Inviteable\Models\Invite;
-use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
 class InvitationCreated
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels;
+    use Dispatchable, SerializesModels;
 
-    /**
-     * Invite object.
-     *
-     * @var CleaniqueCoders\Inviteable\Models\Invite
-     */
-    public $invitation;
-
-    /**
-     * Create a new event instance.
-     */
-    public function __construct(Invite $invitation)
-    {
-        $this->invitation = $invitation;
-    }
+    public function __construct(
+        public readonly Invite $invitation,
+    ) {}
 }

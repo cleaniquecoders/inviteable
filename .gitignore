@@ -1,3 +1,7 @@
 /vendor
-todo.md
+/.phpunit.cache
+/build
+/node_modules
 .phpunit.result.cache
+composer.lock
+todo.md

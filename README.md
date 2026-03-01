@@ -1,173 +1,227 @@
+# Inviteable
 
-[![Build Status](https://travis-ci.org/cleaniquecoders/inviteable.svg?branch=master)](https://travis-ci.org/cleaniquecoders/inviteable) [![Latest Stable Version](https://poser.pugx.org/cleaniquecoders/inviteable/v/stable)](https://packagist.org/packages/cleaniquecoders/inviteable) [![Total Downloads](https://poser.pugx.org/cleaniquecoders/inviteable/downloads)](https://packagist.org/packages/cleaniquecoders/inviteable) [![License](https://poser.pugx.org/cleaniquecoders/inviteable/license)](https://packagist.org/packages/cleaniquecoders/inviteable)
+[![run-tests](https://github.com/cleaniquecoders/inviteable/actions/workflows/run-tests.yml/badge.svg)](https://github.com/cleaniquecoders/inviteable/actions/workflows/run-tests.yml)
+[![fix-php-code-style](https://github.com/cleaniquecoders/inviteable/actions/workflows/fix-php-code-style.yml/badge.svg)](https://github.com/cleaniquecoders/inviteable/actions/workflows/fix-php-code-style.yml)
+[![phpstan](https://github.com/cleaniquecoders/inviteable/actions/workflows/phpstan.yml/badge.svg)](https://github.com/cleaniquecoders/inviteable/actions/workflows/phpstan.yml)
+[![Latest Stable Version](https://poser.pugx.org/cleaniquecoders/inviteable/v/stable)](https://packagist.org/packages/cleaniquecoders/inviteable)
+[![Total Downloads](https://poser.pugx.org/cleaniquecoders/inviteable/downloads)](https://packagist.org/packages/cleaniquecoders/inviteable)
+[![License](https://poser.pugx.org/cleaniquecoders/inviteable/license)](https://packagist.org/packages/cleaniquecoders/inviteable)
 
-## About Your Package
+A polymorphic invitation system for Laravel. Any Eloquent model can have invitations — groups, classrooms, meetings, anything.
 
-Inviteable, inspired from [Laravel Auth Invitations](https://github.com/LaravelDaily/Laravel-Auth-Invitations), but in this package, not for Auth, but for anything. Yes, we mean anything! Invitation to group, to class room, to meeting. Can be anything!  
+## Requirements
+
+- PHP 8.2+
+- Laravel 11 or 12
 
 ## Installation
 
-1. In order to install `cleaniquecoders/inviteable` in your Laravel project, just run the *composer require* command from your terminal:
-
-```
-$ composer require cleaniquecoders/inviteable
+```bash
+composer require cleaniquecoders/inviteable
 ```
 
-2. Then in your `config/app.php` add the following to the providers array:
+Publish and run the migration:
 
-```php
-CleaniqueCoders\Inviteable\InviteableServiceProvider::class,
+```bash
+php artisan vendor:publish --tag=inviteable-migrations
+php artisan migrate
 ```
 
-3. Run the migration file:
+Optionally publish the config:
 
-```
-$ php artisan migrate
+```bash
+php artisan vendor:publish --tag=inviteable-config
 ```
 
 ## Usage
 
-Inviteable provide a trait `\CleaniqueCoders\Inviteable\Traits\HasInviteable`. 
+### Add the Trait
 
-Following are the sample usage.
-
-### Setup
+Add the `HasInviteable` concern to any model that should have invitations:
 
 ```php
-use CleaniqueCoders\Inviteable\Traits\HasInviteable;
+use CleaniqueCoders\Inviteable\Concerns\HasInviteable;
 
-class User extends Authenticatable 
+class User extends Authenticatable
 {
-	use HasInviteable;
+    use HasInviteable;
 }
 ```
 
-### Creating Invitation
+### Create Invitations
 
-```
-$invitation = User::create([
-    'email'    => 'test@test.com',
-    'name'     => 'Test Name',
-    'password' => bcrypt('secret'),
-])
-    ->invitations()
-    ->create([
-        'name'       => 'Invitation',
-        'token'      => str_random(64),
-        'invited_by' => 1,
-        'is_expired' => false,
-        'expired_at' => \Carbon\Carbon::now()->addHours(24),
-    ]);
-```
-
-Once you have create the invitation, you may use the invitation with events and notifications. 
-
-Will add dispatching event on invitation created, so you can extend the use of the invitation to something else like notification.
-
-More sample usage using `routes/console.php`:
+Using the facade:
 
 ```php
-use App\User;
+use CleaniqueCoders\Inviteable\Facades\Inviteable;
 
-Artisan::command('invite', function() {
-    // create a user that will invite other person
-    $invitor = factory(User::class)->create();
-    
-    // to invite who
-    $to_invite = factory(User::class)->create();
-    
-    // login using invitor
-    auth()->loginUsingId($invitor->id);
-
-    // invite user to a class
-    $to_invite->invitations()->create([
-        'name'       => 'Live Coding Class',
-        'token'      => str_random(64),
-        'invited_by' => auth()->user()->id,
-        'is_expired' => false,
-        'expired_at' => \Carbon\Carbon::now()->addHours(24),
-    ]);
-})->describe('Inivite the fastest way via cli.');
+$invite = Inviteable::create(
+    inviteable: $user,
+    name: 'Team Meeting',
+    invitedBy: auth()->id(),
+);
 ```
 
-### Event and Listener
-
-1. On Invitation Created - `\CleaniqueCoders\Inviteable\Events\InvitationAccepted`
-2. On Invitation Accepted - `\CleaniqueCoders\Inviteable\Events\InvitationAlreadyAccepted`
-3. On Invitation Already Accepted - `\CleaniqueCoders\Inviteable\Events\InvitationCreated`
-
-Added Listener to send out e-mail invitation:
-
-1. `CleaniqueCoders\Inviteable\Listeners\Invitations` - You need to configure in your `app/Providers/EventServiceProvider` to have this in your app. 
+Or using the relationship directly:
 
 ```php
-/**
-     * The event listener mappings for the application.
-     *
-     * @var array
-     */
-    protected $listen = [
-        '\CleaniqueCoders\Inviteable\Events\InvitationCreated' => [
-            '\CleaniqueCoders\Inviteable\Listeners\Invitations\SendInvitationEmail',
-        ],
-    ];
+use CleaniqueCoders\Inviteable\Enums\InvitationStatus;
+use Illuminate\Support\Str;
+
+$invite = $user->invitations()->create([
+    'name' => 'Team Meeting',
+    'token' => Str::random(64),
+    'status' => InvitationStatus::Pending,
+    'invited_by' => auth()->id(),
+    'expired_at' => now()->addHours(48),
+]);
 ```
+
+### Accept & Revoke via Facade
+
+```php
+use CleaniqueCoders\Inviteable\Facades\Inviteable;
+
+// Accept an invitation
+$invite = Inviteable::accept($token);
+
+// Revoke a pending invitation
+$invite = Inviteable::revoke($token);
+
+// Find by token
+$invite = Inviteable::findByToken($token);
+```
+
+### Invitation Status
+
+The `InvitationStatus` enum provides four states:
+
+```php
+use CleaniqueCoders\Inviteable\Enums\InvitationStatus;
+
+InvitationStatus::Pending;
+InvitationStatus::Accepted;
+InvitationStatus::Expired;
+InvitationStatus::Revoked;
+```
+
+Model helpers:
+
+```php
+$invite->isPending();
+$invite->isAccepted();
+$invite->isExpired();
+$invite->isRevoked();
+```
+
+### Query Scopes
+
+```php
+use CleaniqueCoders\Inviteable\Models\Invite;
+
+Invite::pending()->get();
+Invite::accepted()->get();
+Invite::expired()->get();
+Invite::revoked()->get();
+Invite::active()->get();           // Pending + not past expiry
+Invite::forToken($token)->first();
+```
+
+### Filtered Relationships
+
+```php
+$user->invitations;            // All invitations
+$user->pendingInvitations;     // Only pending
+$user->acceptedInvitations;    // Only accepted
+```
+
+### Events
+
+| Event | Trigger |
+|-------|---------|
+| `InvitationCreated` | When an invitation is created |
+| `InvitationAccepted` | When an invitation is accepted for the first time |
+| `InvitationAlreadyAccepted` | When an already-accepted invitation is accessed |
+
+A built-in listener (`SendInvitationEmail`) automatically sends an email when an invitation is created, if the inviteable model has an `email` attribute.
 
 ### Middleware
 
-Added Middleware to be use to check only active invite able to get through
+Register the middleware to protect routes requiring a valid invitation token:
 
 ```php
-'inviteable' => \CleaniqueCoders\Inviteable\Http\Middleware\Inviteable::class,
+// bootstrap/app.php (Laravel 11+)
+->withMiddleware(function (Middleware $middleware) {
+    $middleware->alias([
+        'inviteable' => \CleaniqueCoders\Inviteable\Http\Middleware\ValidateInvitationToken::class,
+    ]);
+})
+```
+
+Then use it in routes:
+
+```php
+Route::get('event/{token}', EventController::class)->middleware('inviteable');
 ```
 
 ### Configuration
 
-Added `config/inviteable.php` to handle redirection - using route name:
+The config file (`config/inviteable.php`) controls:
 
 ```php
-<?php 
-
 return [
+    'token' => [
+        'length' => 64,         // Token string length
+    ],
+    'expiry' => [
+        'duration' => 48,       // Hours until expiry
+    ],
     'redirect' => [
         'accepted_token' => 'invitation.index',
         'already_accepted_token' => 'invitation.index',
-        'middleware' => 'invitation.access_denied'
+        'expired_token' => 'invitation.index',
+        'revoked_token' => 'invitation.index',
+        'middleware' => 'invitation.access_denied',
     ],
 ];
 ```
 
-### Route
+### Routes
 
-Default route `php artisan route:list --name=invitation` consist of 
+The package registers these routes:
 
-1. Activation invitation - on success, you will redirect to `inviteable.redirect.accepted_token` route. You may overwrite this. In this route also handle already accepted invitation. Do specify `inviteable.redirect.already_accepted_token` route name to redirect to other page.
-2. Access denied route - You can change the redirect by specify route name in `config.redirect.middleware`
+| Method | URI | Name | Description |
+|--------|-----|------|-------------|
+| GET | `/invitation/{token}` | `invitation` | Accept an invitation |
+| GET | `/invitation/access-denied` | `invitation.access_denied` | Access denied page |
+| GET | `/invitation` | `invitation.index` | Invitation landing page |
 
 ### Views
 
-Run `php artisan vendor:publish --tag=inviteable` to publish configuration and views for Inviteable.
+Publish views for customization:
 
-## Test
-
-To run the test, type `vendor/bin/phpunit` in your terminal.
-
-To have codes coverage, please ensure to install PHP XDebug then run the following command:
-
-```
-$ vendor/bin/phpunit -v --coverage-text --colors=never --stderr
+```bash
+php artisan vendor:publish --tag=inviteable-views
 ```
 
-## Contributions
+## Testing
 
-Everyone are welcome to contribute to this package. However, it's a good practice to provide:
+```bash
+composer test
+```
+
+## Changelog
+
+Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
+
+## Contributing
+
+Everyone is welcome to contribute. Please provide:
 
 1. The problem you solved
-2. Provide test
+2. Tests
 3. Documentation
-
-Without these 3, you may add extra work for the maintainer.
 
 ## License
 
-This package is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
+The MIT License (MIT). Please see [License File](LICENSE.md) for more information.

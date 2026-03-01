@@ -1,39 +1,59 @@
 {
     "name": "cleaniquecoders/inviteable",
-    "description": "Built with Laravel Standalone Package Creator",
-    "keywords": ["package", "laravel", "invite", "auth"],
+    "description": "A polymorphic invitation system for Laravel. Any Eloquent model can have invitations.",
+    "keywords": ["package", "laravel", "invite", "invitation", "polymorphic"],
     "license": "MIT",
     "authors": [
         {
             "name": "Nasrul Hazim",
-            "email": "nasrulhazim.m@gmail.com"
+            "email": "nasrulhazim.m@gmail.com",
+            "homepage": "https://github.com/nasrulhazim",
+            "role": "Developer"
         }
     ],
+    "homepage": "https://github.com/cleaniquecoders/inviteable",
     "autoload": {
         "psr-4": {
             "CleaniqueCoders\\Inviteable\\": "src/"
-        },
-        "files": [
-            "src/Support/helpers.php"
-        ]
+        }
     },
     "autoload-dev": {
         "psr-4": {
+            "CleaniqueCoders\\Inviteable\\Database\\Factories\\": "database/factories/",
             "CleaniqueCoders\\Inviteable\\Tests\\": "tests/"
         }
     },
     "require": {
-        "php": ">=7.3",
-        "cleaniquecoders/blueprint-macro": "^1.0|^2.0|^3.0|4.0",
-        "illuminate/support": "^5.5|^5.6|^5.7|^6.0|^7.0|^8.0"
+        "php": "^8.2",
+        "illuminate/support": "^11.0 || ^12.0",
+        "spatie/laravel-package-tools": "^1.16"
     },
     "require-dev": {
-        "phpunit/phpunit": "^6.5|^7.0|^8.0|^9.0",
-        "orchestra/testbench": "3.5.*|3.6.*|3.7.*|4.*|5.*|6.*",
-        "mockery/mockery": "^1.1"
+        "larastan/larastan": "^3.0",
+        "laravel/pint": "^1.0",
+        "orchestra/testbench": "^9.0 || ^10.0",
+        "pestphp/pest": "^3.0",
+        "pestphp/pest-plugin-arch": "^3.0",
+        "pestphp/pest-plugin-laravel": "^3.0",
+        "phpstan/phpstan": "^2.0"
+    },
+    "scripts": {
+        "test": "vendor/bin/pest",
+        "analyse": "vendor/bin/phpstan analyse",
+        "format": "vendor/bin/pint"
     },
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "CleaniqueCoders\\Inviteable\\InviteableServiceProvider"
+            ]
+        }
     },
     "minimum-stability": "dev",
     "prefer-stable": true

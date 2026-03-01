@@ -1,49 +1,34 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CleaniqueCoders\Inviteable;
 
-use Illuminate\Support\ServiceProvider;
+use CleaniqueCoders\Inviteable\Events\InvitationCreated;
+use CleaniqueCoders\Inviteable\Listeners\SendInvitationEmail;
+use Illuminate\Support\Facades\Event;
+use Spatie\LaravelPackageTools\Package;
+use Spatie\LaravelPackageTools\PackageServiceProvider;
 
-class InviteableServiceProvider extends ServiceProvider
+class InviteableServiceProvider extends PackageServiceProvider
 {
-    /**
-     * Bootstrap the application services.
-     */
-    public function boot()
+    public function configurePackage(Package $package): void
     {
-        /*
-         * Configuration
-         */
-        $this->publishes([
-            __DIR__ . '/config/inviteable.php' => config_path('inviteable.php'),
-        ], 'inviteable');
-        $this->mergeConfigFrom(
-            __DIR__ . '/config/inviteable.php', 'inviteable'
-        );
-
-        /*
-         * Migrations
-         */
-        $this->loadMigrationsFrom(__DIR__ . '/database/migrations');
-
-        /*
-         * Routes
-         */
-        $this->loadRoutesFrom(__DIR__ . '/routes/web.php');
-
-        /*
-         * Views
-         */
-        $this->loadViewsFrom(__DIR__ . '/resources/views', 'inviteable');
-        $this->publishes([
-            __DIR__ . '/resources/views' => resource_path('views/vendor/inviteable'),
-        ], 'inviteable');
+        $package
+            ->name('inviteable')
+            ->hasConfigFile()
+            ->hasViews()
+            ->hasRoute('web')
+            ->hasMigration('create_invites_table');
     }
 
-    /**
-     * Register the application services.
-     */
-    public function register()
+    public function packageBooted(): void
     {
+        Event::listen(InvitationCreated::class, SendInvitationEmail::class);
+    }
+
+    public function packageRegistered(): void
+    {
+        $this->app->singleton(InviteableManager::class);
     }
 }
