@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace CleaniqueCoders\Inviteable\Models;
 
+use CleaniqueCoders\Inviteable\Database\Factories\InviteFactory;
 use CleaniqueCoders\Inviteable\Enums\InvitationStatus;
 use CleaniqueCoders\Inviteable\Events\InvitationCreated;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Support\Carbon;
 
 /**
  * @property int $id
@@ -22,10 +24,10 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @property int|null $accepted_by
  * @property string|null $accepted_ip
  * @property array<string, mixed>|null $metadata
- * @property \Illuminate\Support\Carbon|null $accepted_at
- * @property \Illuminate\Support\Carbon|null $expired_at
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property Carbon|null $accepted_at
+ * @property Carbon|null $expired_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
  */
 class Invite extends Model
 {
@@ -145,8 +147,8 @@ class Invite extends Model
         return $this->status === InvitationStatus::Cancelled;
     }
 
-    protected static function newFactory(): \CleaniqueCoders\Inviteable\Database\Factories\InviteFactory
+    protected static function newFactory(): InviteFactory
     {
-        return \CleaniqueCoders\Inviteable\Database\Factories\InviteFactory::new();
+        return InviteFactory::new();
     }
 }

@@ -7,6 +7,7 @@ namespace Workbench\App\Providers;
 use Flux\FluxServiceProvider;
 use Illuminate\Support\ServiceProvider;
 use Livewire\LivewireServiceProvider;
+use Workbench\App\Models\User;
 
 class WorkbenchServiceProvider extends ServiceProvider
 {
@@ -20,7 +21,7 @@ class WorkbenchServiceProvider extends ServiceProvider
             'inviteable.ui.layout' => 'layouts.app',
             'inviteable.routes.api' => true,
             'inviteable.inviteable_types' => [
-                'User' => \Workbench\App\Models\User::class,
+                'User' => User::class,
             ],
         ]);
 

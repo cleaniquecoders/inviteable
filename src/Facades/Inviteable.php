@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static \CleaniqueCoders\Inviteable\Models\Invite|null findByToken(string $token)
  * @method static \CleaniqueCoders\Inviteable\Models\Invite resend(string|\CleaniqueCoders\Inviteable\Models\Invite $invite)
  *
- * @see \CleaniqueCoders\Inviteable\InviteableManager
+ * @see InviteableManager
  */
 class Inviteable extends Facade
 {

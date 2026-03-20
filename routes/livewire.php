@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use CleaniqueCoders\Inviteable\Models\Invite;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -12,7 +13,7 @@ Route::get('/create', function () {
     return view('inviteable::livewire.pages.create');
 })->name('inviteable.create');
 
-Route::get('/{invite}', function (\CleaniqueCoders\Inviteable\Models\Invite $invite) {
+Route::get('/{invite}', function (Invite $invite) {
     return view('inviteable::livewire.pages.detail', ['invite' => $invite]);
 })->name('inviteable.detail');
 

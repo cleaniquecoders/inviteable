@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace CleaniqueCoders\Inviteable;
 
 use Carbon\Carbon;
+use CleaniqueCoders\Inviteable\Concerns\HasInviteable;
 use CleaniqueCoders\Inviteable\Enums\InvitationStatus;
 use CleaniqueCoders\Inviteable\Events\InvitationCancelled;
+use CleaniqueCoders\Inviteable\Events\InvitationCreated;
 use CleaniqueCoders\Inviteable\Events\InvitationDeclined;
 use CleaniqueCoders\Inviteable\Events\InvitationRevoked;
 use CleaniqueCoders\Inviteable\Models\Invite;
@@ -18,7 +20,7 @@ use Illuminate\Support\Str;
 class InviteableManager
 {
     /**
-     * @param  Model&\CleaniqueCoders\Inviteable\Concerns\HasInviteable  $inviteable
+     * @param  Model&HasInviteable  $inviteable
      * @param  array<string, mixed>|null  $metadata
      */
     public function create(
@@ -50,7 +52,7 @@ class InviteableManager
     }
 
     /**
-     * @param  Model&\CleaniqueCoders\Inviteable\Concerns\HasInviteable  $inviteable
+     * @param  Model&HasInviteable  $inviteable
      * @param  array<array{name: string, invited_by?: int|null, expiry_hours?: int|null, metadata?: array<string, mixed>|null}>  $invitations
      * @return Collection<int, Invite>
      */
@@ -168,7 +170,7 @@ class InviteableManager
         $invite->plainToken = $plainToken;
 
         // Fire the created event to trigger email sending
-        event(new \CleaniqueCoders\Inviteable\Events\InvitationCreated($invite));
+        event(new InvitationCreated($invite));
 
         return $invite;
     }

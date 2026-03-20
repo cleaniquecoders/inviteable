@@ -6,6 +6,7 @@ use CleaniqueCoders\Inviteable\Enums\InvitationStatus;
 use CleaniqueCoders\Inviteable\Models\Invite;
 use CleaniqueCoders\Inviteable\Tests\Stubs\User;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Schema;
 
 beforeEach(function () {
     Event::fake();
@@ -18,7 +19,7 @@ beforeEach(function () {
 });
 
 it('has invites table', function () {
-    expect(\Illuminate\Support\Facades\Schema::hasTable('invites'))->toBeTrue();
+    expect(Schema::hasTable('invites'))->toBeTrue();
 });
 
 it('can create an invitation with pending status', function () {

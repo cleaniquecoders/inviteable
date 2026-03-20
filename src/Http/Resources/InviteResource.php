@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace CleaniqueCoders\Inviteable\Http\Resources;
 
+use CleaniqueCoders\Inviteable\Models\Invite;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
- * @mixin \CleaniqueCoders\Inviteable\Models\Invite
+ * @mixin Invite
  */
 class InviteResource extends JsonResource
 {

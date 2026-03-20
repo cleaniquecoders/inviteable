@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace CleaniqueCoders\Inviteable\Http\Livewire;
 
+use CleaniqueCoders\Inviteable\Enums\InvitationStatus;
 use CleaniqueCoders\Inviteable\InviteableManager;
 use CleaniqueCoders\Inviteable\Models\Invite;
 use Illuminate\Contracts\View\View;
@@ -23,7 +24,7 @@ class InvitationDetail extends Component
     public function revoke(): void
     {
         if ($this->invite->isPending()) {
-            $this->invite->update(['status' => \CleaniqueCoders\Inviteable\Enums\InvitationStatus::Revoked]);
+            $this->invite->update(['status' => InvitationStatus::Revoked]);
             $this->invite->refresh();
 
             session()->flash('message', 'Invitation has been revoked.');

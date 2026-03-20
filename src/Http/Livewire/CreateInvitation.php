@@ -6,6 +6,7 @@ namespace CleaniqueCoders\Inviteable\Http\Livewire;
 
 use CleaniqueCoders\Inviteable\InviteableManager;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Model;
 use Livewire\Component;
 
 class CreateInvitation extends Component
@@ -64,7 +65,7 @@ class CreateInvitation extends Component
 
         $manager = app(InviteableManager::class);
 
-        /** @var class-string<\Illuminate\Database\Eloquent\Model> $modelClass */
+        /** @var class-string<Model> $modelClass */
         $modelClass = $this->inviteableType;
         $inviteable = $modelClass::findOrFail($this->inviteableId);
 
